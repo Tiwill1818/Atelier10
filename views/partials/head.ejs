@@ -6,6 +6,11 @@
 <!-- CSS (load bootstrap from a CDN) -->
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:8080');
+</script>
+
 <style>
     body {
         padding-top: 50px;

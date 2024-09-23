@@ -25,7 +25,13 @@ app.use(function (req, res, next) {
     res.setHeader('Content-Type', 'text/plain');
     res.status(404).send('Page introuvable !');
 });
-app.listen(8080);
+var server = app.listen(8080);
+
+var io = require('socket.io')(server);
+io.sockets.on('connection', function (socket) {
+    console.log('Un client est connecté !');
+});
+
 
 
 
