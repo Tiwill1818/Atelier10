@@ -13,6 +13,9 @@
         document.getElementById('nbCli').innerHTML = 'Client #' + message.nbClient;
         document.getElementById('servDate').innerHTML = 'Le serveur a été lancé le ' + message.servDate;
         document.getElementById('clientDate').innerHTML = 'Le client a été lancé le ' + message.clientDate;
+        setInterval(function () {
+            document.getElementById('realTime').innerHTML = 'Il est actuellement ' + new Date().toLocaleTimeString();
+        }, 1000);
     });
 </script>
 
