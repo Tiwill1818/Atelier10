@@ -26,11 +26,17 @@ app.use(function (req, res, next) {
     res.status(404).send('Page introuvable !');
 });
 var server = app.listen(8080);
+var nbClient = 0;
+var servNow = new Date();
 
 var io = require('socket.io')(server);
 io.sockets.on('connection', function (socket) {
-    console.log('Un client est connecté !');
+    nbClient++;
+    console.log('Un client '+nbClient+ ' est connecté !');
+    socket.emit('message', { nbClient: nbClient, servDate: servNow.toLocaleString(), clientDate: new Date().toLocaleString() });
 });
+
+
 
 
 

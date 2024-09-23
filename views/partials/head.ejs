@@ -9,7 +9,14 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io.connect('http://localhost:8080');
+    socket.on('message', function (message) {
+        document.getElementById('nbCli').innerHTML = 'Client #' + message.nbClient;
+        document.getElementById('servDate').innerHTML = 'Le serveur a été lancé le ' + message.servDate;
+        document.getElementById('clientDate').innerHTML = 'Le client a été lancé le ' + message.clientDate;
+    });
 </script>
+
+
 
 <style>
     body {
