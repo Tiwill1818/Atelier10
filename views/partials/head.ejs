@@ -9,14 +9,47 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io.connect('http://localhost:8080');
+    var heureAlarme = 0;
+    var minuteAlarme = 0;
+    var numClient = 0;
+    var alarme = 0;
     socket.on('message', function (message) {
+        numClient = message.nbClient;
         document.getElementById('nbCli').innerHTML = 'Client #' + message.nbClient;
         document.getElementById('servDate').innerHTML = 'Le serveur a été lancé le ' + message.servDate;
         document.getElementById('clientDate').innerHTML = 'Le client a été lancé le ' + message.clientDate;
-        setInterval(function () {
-            document.getElementById('realTime').innerHTML = 'Il est actuellement ' + new Date().toLocaleTimeString();
-        }, 1000);
+        document.getElementById('realTime').innerHTML = 'Il est actuellement ' + new Date().toLocaleTimeString();
+
+        document.getElementById('poke').addEventListener('click', function () {
+            socket.emit('alarme', { temps: document.getElementById('alarme').value, idClient: numClient });
+        });
+
+
+
     });
+
+    socket.on('broadcast', function (message) {
+        heureAlarme = message.heure;
+        minuteAlarme = message.minute;
+        alarme = 1;
+        alert(message.msg + " " + message.idClient);
+    });
+    document.hidden
+    setInterval(function () {
+        window.focus();
+        var dateActuelle = new Date();
+        document.getElementById('realTime').innerHTML = 'Il est actuellement ' + dateActuelle.toLocaleTimeString();
+        if ((dateActuelle.getHours() == heureAlarme) && (dateActuelle.getMinutes() == minuteAlarme) && alarme) {
+            alert('Il est temps de se réveiller !');
+            alarme = 0;
+        }
+        console.log('Client #' + numClient + ' : ' + dateActuelle.toLocaleTimeString());
+    }, 1000);
+
+
+
+
+
 </script>
 
 

@@ -32,9 +32,17 @@ var servNow = new Date();
 var io = require('socket.io')(server);
 io.sockets.on('connection', function (socket) {
     nbClient++;
-    console.log('Un client '+nbClient+ ' est connecté !');
+    console.log('Un client ' + nbClient + ' est connecté !');
     socket.emit('message', { nbClient: nbClient, servDate: servNow.toLocaleString(), clientDate: new Date().toLocaleString() });
+    socket.on('alarme', function (message) {
+        console.log('Un client '+ message.idClient +' me parle ! Il me dit : ' + message.temps);   
+        
+        io.emit('broadcast', { msg: "Nouvelle heure d\'alarme : " + message.temps, heure: message.temps.split(':')[0], minute: message.temps.split(':')[1] , idClient: message.idClient});
+    });
+    
+
 });
+
 
 
 
